@@ -1,0 +1,46 @@
+/* body, html {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: auto;
+} */
+
+.landing{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.questions-modal{
+    border: 1px solid black;
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#lift-val{
+    padding: .3rem;
+    border: 1px solid black;
+    border-radius: .5rem;
+}
+
+#flr-val{
+    padding: .3rem;
+    border: 1px solid black;
+    border-radius: .5rem;
+}
+
+.btn{
+    padding: .5rem 1rem  .5rem  1rem;
+    border: 1px solid black;
+    border-radius: .5rem;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
