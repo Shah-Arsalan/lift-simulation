@@ -106,7 +106,7 @@ function toLiftPage (){
             doorContainer.appendChild(leftDoor)
             doorContainer.appendChild(rightDoor)
             lift.style.height = "7rem";
-            lift.style.width = "7rem"
+            lift.style.width = "4rem"
             lift.style.minWidth = 0;
             lift.style.backgroundColor = "silver";
             lift.style.border = "3px solid green";
@@ -172,8 +172,8 @@ setTimeout(()=>{
 setTimeout(()=>{
     movingLift.querySelector(".left-door").style.transition = "width 2500ms";
     movingLift.querySelector(".right-door").style.transition = "width 2500ms";
-    movingLift.querySelector(".left-door").style.width= "56px";
-    movingLift.querySelector(".right-door").style.width= "56px";
+    movingLift.querySelector(".left-door").style.width= "36px";
+    movingLift.querySelector(".right-door").style.width= "36px";
 
 },currDist * 2000 + 2500)
 
@@ -205,8 +205,8 @@ setTimeout(()=>{
         setTimeout(()=>{
             currLift.querySelector(".left-door").style.transition = "width 2500ms";
             currLift.querySelector(".right-door").style.transition = "width 2500ms";
-            currLift.querySelector(".left-door").style.width= "56px";
-            currLift.querySelector(".right-door").style.width= "56px";
+            currLift.querySelector(".left-door").style.width= "36px";
+            currLift.querySelector(".right-door").style.width= "36px";
         
         },2500)
     }
