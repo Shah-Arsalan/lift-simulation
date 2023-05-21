@@ -6,6 +6,7 @@ const landingPage = document.querySelector(".landing");
 const floors = document.querySelector(".floor-container");
 floors.style.display ="none"
 button.addEventListener("click",toLiftPage);
+const liftQueue = []
 
 
 function toLiftPage (){
@@ -125,26 +126,39 @@ function toLiftPage (){
         upButton.style.display = "none"
     }
 
-    upButton.addEventListener("click",()=>moveLift(i));
-    downButton.addEventListener("click",()=>moveLift(i));
+    upButton.addEventListener("click",()=>{
+liftQueue.push(i);
+        moveLift();
+    });
+    downButton.addEventListener("click",()=>{
+        liftQueue.push(i);
+                moveLift();
+            });
 
-    }
+    
 
 
 
-   
+        }
    
 }
 
-function moveLift(i){
-const currentFloor = document.querySelector(`[class=floor${i}]`);
-if(currentFloor.getAttribute("status") === "waiting"){
-    let {movingLift ,currDist} = calculateNearestLift(i);
+function moveLift(){
+    console.log("the lift queue" , liftQueue)
+// const currentFloor = document.querySelector(`[class=floor${i}]`);
+// if(currentFloor.getAttribute("status") === "waiting"){
+    // console.log("it")
+    // currentFloor.setAttribute("status", "not-waiting")
+    let {movingLift ,currDist , target} = calculateNearestLift();
+    const Alllifts = Array.from(document.querySelectorAll(".lift"));
+    const liftPresent = Alllifts.filter((ele) => ele.getAttribute("present-floor") == target);
+    if (liftPresent.length == 0){
+    if(movingLift){
     movingLift.setAttribute("availability", "not-available")
     movingLift.style.border = "3px solid red";
     movingLift.style.transitionDuration = `${currDist * 2}s`;
-    movingLift.style.transform =`translateY(-${(i-1)*160}px)`;
-    movingLift.setAttribute("present-floor",i)
+    movingLift.style.transform =`translateY(-${(target-1)*160}px)`;
+    movingLift.setAttribute("present-floor",target)
 
 
 setTimeout(()=>{
@@ -168,32 +182,74 @@ setTimeout(()=>{
     setTimeout(()=>{
         movingLift.setAttribute("availability", "available")
         movingLift.style.border = "3px solid green";
+        console.log("the lift queue is in settimeout", liftQueue)
+        // currentFloor.setAttribute("status", "waiting")
+        // if(liftQueue.length > 0){
+            moveLift()
+        // }
     },currDist * 2000 + 5000)
 
+
 }
+    }else{
+        const currLift = liftPresent[0];
+        console.log("The current lift is", currLift);
+  
+        
+            currLift.querySelector(".left-door").style.transition = "width 2500ms";
+            currLift.querySelector(".right-door").style.transition = "width 2500ms";
+            currLift.querySelector(".left-door").style.width= "0px";
+            currLift.querySelector(".right-door").style.width= "0px";
+        
+        
+        setTimeout(()=>{
+            currLift.querySelector(".left-door").style.transition = "width 2500ms";
+            currLift.querySelector(".right-door").style.transition = "width 2500ms";
+            currLift.querySelector(".left-door").style.width= "56px";
+            currLift.querySelector(".right-door").style.width= "56px";
+        
+        },2500)
+    }
+
+// }// console.log("pronting", document.getElementsByClassName("floor2")[0].contains(document.getElementsByClassName("upButton")[0]))
 }
 
 
 
-function  calculateNearestLift(i){
+function  calculateNearestLift(){
     const Alllifts = Array.from(document.querySelectorAll(".lift"));
     const availableLifts = Alllifts.filter((ele) => ele.getAttribute("availability") === "available");
     let currDist = 900000;
+    let k;
+    let movingLift;
+  let target;
+  
+
     if(availableLifts.length > 0){
-        for (let k = 0; k < availableLifts.length; k++) {
+        target = liftQueue.shift();
+        console.log("the target is" ,target)
+        console.log("available")
+         
+        for ( k = 0; k < availableLifts.length; k++) {
             if (
               Math.abs(
                 parseInt(availableLifts[k].getAttribute("present-floor")) -
-                  i
+                  target
               ) < currDist
             ) {
               currDist = Math.abs(
                 parseInt(availableLifts[k].getAttribute("present-floor")) -
-                  i
+                  target
               );
-              movingLift = availableLifts[k];
+              
+             movingLift = availableLifts[k];
+              
             }
+
           }
+         
     }
-    return {movingLift , currDist};
+    console.log(movingLift)
+
+    return {movingLift , currDist, target};
 }
