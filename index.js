@@ -4,9 +4,13 @@ const button = document.querySelector(".btn");
 const qnModal = document.querySelector(".questions-modal");
 const landingPage = document.querySelector(".landing");
 const floors = document.querySelector(".floor-container");
+const backButton = document.querySelector(".back-btn");
 floors.style.display ="none"
 button.addEventListener("click",toLiftPage);
+backButton.addEventListener("click",toLandingPage)
 const liftQueue = []
+
+
 
 
 function toLiftPage (){
@@ -25,7 +29,7 @@ function toLiftPage (){
    const floor = document.createElement("div");
    const liftContainer = document.createElement("div");
    const floorNumContainer = document.createElement("div")
-   floorNumContainer.innerText = `Floor ${i}`
+   floorNumContainer.innerText = `F${i}`
    liftContainer.style.display = "flex"
 
    buttonsDiv.style.display = "flex";
@@ -34,6 +38,7 @@ function toLiftPage (){
    buttonsDiv.style.justifyContent = "center";
    buttonsDiv.style.alignItems = "center";
    buttonsDiv.style.flexDirection = "column";
+//    buttonsDiv.style.color = "red";
 
    upButton.style.backgroundColor = "black";
    downButton.style.backgroundColor = "black";
@@ -55,10 +60,12 @@ function toLiftPage (){
    liftContainer.style.width = "80%";
    upButton.innerText = "UP";
    downButton.innerText = "DOWN";
+   buttonsDiv.appendChild(floorNumContainer);
    buttonsDiv.appendChild(upButton);
    buttonsDiv.appendChild(downButton);
+   
     floor.style.display = "flex"
-    floor.style.justifyContent ="space-between"
+    // floor.style.justifyContent ="space-between"
     floor.style.alignItems="center"
     floor.style.height = "10rem"
     floor.style.borderBottom = "1px solid black"
@@ -70,7 +77,7 @@ function toLiftPage (){
     floors.appendChild(floor)
     floor.appendChild(buttonsDiv) 
     floor.appendChild(liftContainer) 
-    floor.appendChild(floorNumContainer)
+    // floor.appendChild(floorNumContainer)
     
 
     if(i==1){
@@ -82,7 +89,7 @@ function toLiftPage (){
             lift.setAttribute("present-floor",i)
             lift.classList.add(`lift${j}`)
             lift.classList.add(`lift`)
-            lift.style.padding = "10px"
+            lift.style.padding = "4px"
         
             
             const leftDoor = document.createElement("div")
@@ -98,6 +105,7 @@ function toLiftPage (){
             rightDoor.classList.add("right-door")
             
             const doorContainer = document.createElement("div")
+            doorContainer.classList.add("door-ctr")
             doorContainer.style.width="100%"
             doorContainer.style.display="flex"
             doorContainer.style.gap = "5px"
@@ -145,10 +153,6 @@ liftQueue.push(i);
 
 function moveLift(){
     console.log("the lift queue" , liftQueue)
-// const currentFloor = document.querySelector(`[class=floor${i}]`);
-// if(currentFloor.getAttribute("status") === "waiting"){
-    // console.log("it")
-    // currentFloor.setAttribute("status", "not-waiting")
     let {movingLift ,currDist , target} = calculateNearestLift();
     const Alllifts = Array.from(document.querySelectorAll(".lift"));
     const liftPresent = Alllifts.filter((ele) => ele.getAttribute("present-floor") == target);
@@ -195,7 +199,7 @@ setTimeout(()=>{
         const currLift = liftPresent[0];
         console.log("The current lift is", currLift);
   
-        
+            currLift.style.border = "3px solid red";
             currLift.querySelector(".left-door").style.transition = "width 2500ms";
             currLift.querySelector(".right-door").style.transition = "width 2500ms";
             currLift.querySelector(".left-door").style.width= "0px";
@@ -207,8 +211,13 @@ setTimeout(()=>{
             currLift.querySelector(".right-door").style.transition = "width 2500ms";
             currLift.querySelector(".left-door").style.width= "36px";
             currLift.querySelector(".right-door").style.width= "36px";
-        
+          
         },2500)
+
+       setTimeout(()=>{
+        currLift.style.border = "3px solid green";
+        moveLift();
+       },5000)
     }
 
 // }// console.log("pronting", document.getElementsByClassName("floor2")[0].contains(document.getElementsByClassName("upButton")[0]))
@@ -252,4 +261,8 @@ function  calculateNearestLift(){
     console.log(movingLift)
 
     return {movingLift , currDist, target};
+}
+
+function toLandingPage (){
+    location.reload();
 }

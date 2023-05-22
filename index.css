@@ -44,3 +44,37 @@
     color: white;
     background-color: black;
 }
+
+.back-btn{
+    padding: .5rem 1rem  .5rem  1rem;
+    border: 1px solid ;
+    border-radius: .5rem;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(218, 15, 15);
+    
+}
+
+
+@media only screen and (max-width: 900px) {
+    .lift{
+      width: 2rem !important;
+      height: 4rem !important;
+    
+    }
+    .right-door{
+        
+        height: 4rem !important;
+      
+      }
+
+      .left-door{
+        
+        height: 4rem !important;
+      
+      }
+
+      .door-ctr{
+        gap: 1px !important;
+      }
+        }
